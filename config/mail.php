@@ -115,4 +115,6 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+
+    'Team_Name' => env('TEAM_NAME', 'Misty Team'),
 ];

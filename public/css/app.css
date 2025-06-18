@@ -9,21 +9,31 @@
   box-sizing: border-box;
 }
 
-body {
+/* Gradient Animation */
+.gradient{
+    /* make sure first and last element are identical */
+    background: linear-gradient(to right, #008baa, #7e42a7, #6600c5, #6070fd, #2a46ff, #0099ff, #008ead);
+    /* allow smooth movement */
+    background-size: 200%;
+    background-clip: text;
+    /* make sure only effect the text */
+    -webkit-background-clip: text;
+    /* make text transparent */
+    -webkit-text-fill-color: transparent;
+    /* make gradient move dynamically */
+    animation: animate-gradient 7s linear infinite;
+}
+
+/* body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #fff;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
 
 /* Button Styles */
-.btn {
+/* .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +96,7 @@ body {
 }
 
 /* Header */
-.header {
+/* .header {
   border-bottom: 1px solid #e5e7eb;
   padding: 0.75rem 0;
 }
@@ -150,10 +160,10 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-}
+} */
 
 /* Hero Section */
-.hero {
+/* .hero {
   padding: 4rem 0;
   text-align: center;
 }
@@ -255,10 +265,10 @@ body {
   margin: 0 auto;
   color: #6b7280;
   font-size: 1.5rem;
-}
+} */
 
 /* Numbers Section */
-.numbers {
+/* .numbers {
   padding: 4rem 0;
   background-color: #f9fafb;
 }
@@ -318,10 +328,10 @@ body {
 .stat-label {
   color: #6b7280;
   font-size: 0.875rem;
-}
+} */
 
 /* Testimonials Section */
-.testimonials {
+/* .testimonials {
   padding: 4rem 0;
 }
 
@@ -382,10 +392,10 @@ body {
 
 .author-role {
   color: #6b7280;
-}
+} */
 
 /* Team Section */
-.team {
+/* .team {
   padding: 4rem 0;
   background-color: #f9fafb;
 }
@@ -435,10 +445,10 @@ body {
 
 .social-link:hover {
   color: #6b7280;
-}
+} */
 
 /* App Download Section */
-.app-download {
+/* .app-download {
   padding: 4rem 0;
 }
 
@@ -476,10 +486,10 @@ body {
   gap: 1rem;
   justify-content: center;
   margin-top: 2rem;
-}
+} */
 
 /* Footer */
-.footer {
+/* .footer {
   background-color: #1f2937;
   color: white;
   padding: 3rem 0;
@@ -591,10 +601,10 @@ body {
 
 .footer-nav a:hover {
   color: white;
-}
+} */
 
 /* Responsive Design */
-@media (min-width: 640px) {
+/* @media (min-width: 640px) {
   .hero-buttons {
     flex-direction: row;
   }
@@ -659,4 +669,4 @@ body {
   .section-title {
     font-size: 1.5rem;
   }
-}
+}  */

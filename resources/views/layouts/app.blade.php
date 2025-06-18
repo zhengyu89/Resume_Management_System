@@ -2,142 +2,143 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Manager</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        tailwind.config = {
+            important: true, 
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-    <body>
-        <!-- Header -->
-        <header class="header">
-            <div class="container">
-                <div class="header-content">
-                    <div class="header-left">
-                        <div class="logo">
-                            <div class="logo-icon"></div>
-                            <span class="logo-text">Resume Manager</span>
-                        </div>
-                        <nav class="nav">
-                            <a href="{{ route('welcome') }}" class="nav-link">Home</a>
-                            <a href="{{ route(name:'talent_search') }}" class="nav-link">Talent Search</a>
-                            <a href="{{ route(name:'FAQ') }}" class="nav-link">FAQ</a>
-                            <div class="nav-dropdown">
-                                <a href="#" class="nav-link">Sixteen <i class="fas fa-chevron-down"></i></a>
-                            </div>
-                        </nav>
-                    </div>
-                    <div class="header-right">
-                        @if (Route::has('login'))
-                            <nav class="flex items-center justify-end gap-4">
-                                @auth
-                                    <a
-                                        href="{{ url('/dashboard') }}"
-                                    >
-                                        Dashboard
-                                    </a>
-                                @else
-                                    <a
-                                        href="{{ route('login') }}"
-                                    >
-                                        <button class="btn btn-ghost">Log In</button>
-                                    </a>
 
-                                    @if (Route::has('register'))
-                                        <a
-                                            href="{{ route('register') }}"
-                                            <button class="btn btn-primary">Register</button>
-                                        </a>
-                                    @endif
-                                @endauth
-                            </nav>
+<body>
+    <!-- Header -->
+    <header class="border-b border-gray-200 py-3">
+        <div class="container mx-auto max-w-7xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8" >
+                    <a href="{{ route('welcome') }}"  class="flex items-center space-x-2 no-underline">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8"><img src="/assets/ResumeManager_black.png" alt="resume logo"></div>
+                        <span class=" text-transparent bg-[linear-gradient(to_right,_#008baa,_#7e42a7,_#6600c5,_#6070fd,_#2a46ff,_#0099ff,_#008ead)] bg-clip-text font-semibold text-xl ">Resume Manager</span>
+                    </div>
+                    </a>
+                    <nav class="hidden md:flex items-center space-x-6">
+                        <a href="{{ route('welcome') }}" class="relative text-gray-600 hover:text-blue-800 text-sm no-underline after:absolute after:left-0 after:-bottom-0.5 after:h-[1.5px] after:w-0 after:bg-blue-800 after:transition-all after:duration-300 hover:after:w-full font-medium">Home</a>
+                        <a href="{{ route(name:'talent_search') }}" class="relative text-gray-600 hover:text-blue-800 text-sm no-underline after:absolute after:left-0 after:-bottom-0.5 after:h-[1.5px] after:w-0 after:bg-blue-800 after:transition-all after:duration-300 hover:after:w-full font-medium">Talent Search</a>
+                        <a href="{{ route(name:'FAQ') }}" class="relative text-gray-600 hover:text-blue-800 text-sm no-underline after:absolute after:left-0 after:-bottom-0.5 after:h-[1.5px] after:w-0 after:bg-blue-800 after:transition-all after:duration-300 hover:after:w-full font-medium">FAQ</a>
+                        <div class="flex items-center space-x-1">
+                            <a href="#" class="relative text-gray-600 hover:text-blue-800 text-sm no-underline after:absolute after:left-0 after:-bottom-0.5 after:h-[1.5px] after:w-0 after:bg-blue-800 after:transition-all after:duration-300 hover:after:w-full font-medium">Sixteen</a>
+                            <i class="fas fa-chevron-down text-gray-600 text-xs"></i>
+                        </div>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-3">
+                    @if (Route::has('login'))
+                    <nav class="flex items-center justify-end gap-4">
+                        @auth
+                        <a
+                            href="{{ url('/dashboard') }}">
+                            Dashboard
+                        </a>
+                        @else
+                        <a
+                            href="{{ route('login') }}">
+                            <button class="text-blue-600 hover:text-blue-700 px-4 py-2 rounded-md font-medium text-sm no-underline">
+                                Log In</button>
+                        </a>
+
+                        @if (Route::has('register'))
+                        <a
+                            href="{{ route('register') }}"
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium text-sm no-underline">
+                            Register</button>
+                        </a>
                         @endif
+                        @endauth
+                    </nav>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        @yield('content')
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-8 h-8"><img src="/assets/ResumeManager_white.png" alt="resume logo"></div>
+                        <span class="font-semibold text-lg">Resume Manager</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                        <input
+                            type="email"
+                            placeholder="Enter your email to get the latest news..."
+                            class="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 px-4 py-2 rounded-md text-sm flex-1"
+                        />
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Content</h4>
+                    <ul class="space-y-2 text-gray-300 text-sm hover:text-white no-underline list-none ml-5 p-0">
+                        <li><a href="{{ route('welcome') }}" class="text-gray-400 hover:text-white no-underline font-semibold">Home</a></li>
+                        <li><a href="{{ route(name:'talent_search') }}" class="text-gray-400 hover:text-white no-underline font-semibold">Talent Search</a></li>
+                        <li><a href="{{ route(name:'FAQ') }}" class="text-gray-400 hover:text-white no-underline font-semibold">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    
+                    <div>
+                        <h5 class="font-medium mb-2">Join Us</h5>
+                        <div class="flex space-x-3 ">
+                            <a href="#" class="text-gray-400 hover:text-white">
+                                <i class="bx bxl-facebook text-4xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white font-semibold">
+                                <i class="bx bxl-instagram text-4xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white">
+                                <i class="bx bxl-youtube text-4xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white">
+                                <i class="bx bxl-linkedin-square text-4xl"></i>
+                            </a>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
-        </header>
 
-        <main>
-            @yield('content')
-        </main>
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">Copyright © Misty 2025. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-column">
-                        <div class="footer-logo">
-                            <div class="logo-icon white"></div>
-                            <span class="logo-text">WebbyFrames</span>
-                        </div>
-                        <div class="newsletter">
-                            <input type="email" placeholder="Enter your email to get the latest news..." class="newsletter-input">
-                            <button class="btn btn-primary">Subscribe</button>
-                        </div>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4 class="footer-title">Column One</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Twenty One</a></li>
-                            <li><a href="#">Thirty Two</a></li>
-                            <li><a href="#">Forty Three</a></li>
-                            <li><a href="#">Fifty Four</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4 class="footer-title">Column Two</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Sixty Five</a></li>
-                            <li><a href="#">Seventy Six</a></li>
-                            <li><a href="#">Eighty Seven</a></li>
-                            <li><a href="#">Ninety Eight</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4 class="footer-title">Column Three</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">One Ten</a></li>
-                            <li><a href="#">Three Four</a></li>
-                            <li><a href="#">Five Six</a></li>
-                            <li><a href="#">Seven Eight</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4 class="footer-title">Column Four</h4>
-                        <div class="app-badges">
-                            <div class="app-badge">
-                                <i class="fab fa-apple"></i>
-                            </div>
-                            <div class="app-badge">
-                                <i class="fab fa-google-play"></i>
-                            </div>
-                        </div>
-                        <div class="social-section">
-                            <h5 class="social-title">Join Us</h5>
-                            <div class="social-links">
-                                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="footer-bottom">
-                    <p class="copyright">Copyright © Misty 2024. All rights reserved.</p>
-                    <div class="footer-nav">
-                        <a href="#">Eleven</a>
-                        <a href="#">Twelve</a>
-                        <a href="#">Thirteen</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </body>
 </html>
