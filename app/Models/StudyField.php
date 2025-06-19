@@ -9,4 +9,11 @@ class StudyField extends Model
 {
     /** @use HasFactory<\Database\Factories\StudyFieldFactory> */
     use HasFactory;
+
+    protected $fillable = ['name'];
+
+    public function educations()
+    {
+        return $this->hasMany(UserEducation::class, 'study_field_id');
+    }
 }
