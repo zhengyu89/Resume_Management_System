@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+//use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Language;
 
 class LanguageSeeder extends Seeder
 {
@@ -12,6 +13,9 @@ class LanguageSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $languages = ['English', 'Malay', 'Mandarin', 'Japanese', 'Spanish', 'Tamil'];
+        foreach ($languages as $lang) {
+            Language::firstOrCreate(['name' => $lang]);
+        }
     }
 }

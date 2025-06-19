@@ -5,6 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\UserResume;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -15,6 +17,8 @@ class UserFactory extends Factory
      * The current password being used by the factory.
      */
     protected static ?string $password;
+
+    protected $model = User::class;
 
     /**
      * Define the model's default state.
@@ -40,5 +44,15 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    // Ensure every user gets one resume
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            UserResume::factory()->create([
+                'user_id' => $user->id,
+            ]);
+        });
     }
 }

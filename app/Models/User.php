@@ -52,4 +52,9 @@ class User extends Authenticatable
         $this->notify(new CustomResetPassword($token));
     }
 
+    // A user can have only one resume
+    public function resumes()
+    {
+        return this->hasOne(UserResume::class);
+    }
 }

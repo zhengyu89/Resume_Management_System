@@ -3,12 +3,15 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\UserDocument;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserDocument>
  */
 class UserDocumentFactory extends Factory
-{
+{   
+    protected $model = UserDocument::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,8 @@ class UserDocumentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'resume_id' => \App\Models\UserResume::factory(),
+            'file_path' => 'documents/' . $this->faker->uuid . '.pdf',
         ];
     }
 }

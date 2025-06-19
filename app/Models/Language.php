@@ -9,4 +9,12 @@ class Language extends Model
 {
     /** @use HasFactory<\Database\Factories\LanguageFactory> */
     use HasFactory;
+
+    protected $fillable = ['name'];
+
+    // A language can be referred by many user languages
+    public function userLanguages()
+    {
+        return $this->hasMany(UserLanguage::class);
+    }
 }
