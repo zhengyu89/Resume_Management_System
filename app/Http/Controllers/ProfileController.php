@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Collection;
 
 class ProfileController extends Controller
 {
@@ -57,4 +58,18 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Dummy user
+     */
+    public function showProfile()
+    {
+        // Dummy user data so Blade doesn't break
+        $user = (object)[
+            'profile_picture' => null, // or a URL string if you want
+        ];
+
+        return view('dashboard', compact('user'));
+    }
+
 }

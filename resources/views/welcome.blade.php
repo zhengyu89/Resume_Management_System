@@ -13,10 +13,10 @@
                 Your All In One Job Platform
             </h1>
             <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a href="https://rxresu.me/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium">
+                <a href="https://rxresu.me/" target="_blank" class="no-underline bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium">
                     Build Resume
                 </a>
-                <a href="{{ route(name:'talent_search') }}" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-md font-medium">
+                <a href="{{ route(name:'talent_search') }}" class="no-underline border border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-md font-medium">
                     Find Talent
                 </a>
             </div>
