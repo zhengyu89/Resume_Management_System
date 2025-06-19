@@ -21,6 +21,7 @@ return new class extends Migration
             // Contact
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('study_fields', function (Blueprint $table) {
