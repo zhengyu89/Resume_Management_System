@@ -53,8 +53,8 @@ class User extends Authenticatable
     }
 
     // A user can have only one resume
-    public function resumes()
+    public function resume()
     {
-        return this->hasOne(UserResume::class);
+        return $this->hasOne(UserResume::class);
     }
 }
