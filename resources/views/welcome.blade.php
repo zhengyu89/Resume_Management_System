@@ -194,10 +194,10 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 @php
                     $teamMembers = [
-                        ['name' => 'Tan Zheng Yu', 'role' => 'Full Stack Developer', 'email' => 'tanzhengyu@graduate.utm.my', 'image' => 'assets/726ab42e-493c-4959-a4b3-bcda02f0e835.jpeg'],
-                        ['name' => 'Teow Zi Xian', 'role' => 'Backend Developer', 'email' => 'teow@graduate.utm.my', 'image' => 'assets/2025-06-18 15.52.02.jpg'],
-                        ['name' => 'Tan Zhen Li', 'role' => 'Frontend Developer', 'email' => 'tan.li@graduate.utm.my', 'image' => 'assets/d9b468da-6b3e-4558-b222-400af00833b8.jpg'],
-                        ['name' => 'Benjamin Chew', 'role' => 'Database Administrator', 'email' => 'jun00@graduate.utm.my', 'image' => 'assets/a7415718-13d0-4c0d-a488-64b0ee6aa326.jpg'],
+                        ['name' => 'Tan Zheng Yu', 'role' => 'Full Stack Developer', 'email' => 'tanzhengyu@graduate.utm.my', 'image' => 'assets/TanZhengYu.jpeg'],
+                        ['name' => 'Teow Zi Xian', 'role' => 'Backend Developer', 'email' => 'teow@graduate.utm.my', 'image' => 'assets/TeowZiXian.jpg'],
+                        ['name' => 'Tan Zhen Li', 'role' => 'Frontend Developer', 'email' => 'tan.li@graduate.utm.my', 'image' => 'assets/Zhenli.jpg'],
+                        ['name' => 'Benjamin Chew', 'role' => 'Database Administrator', 'email' => 'jun00@graduate.utm.my', 'image' => 'assets/Benjamin.jpg'],
                     ];
                 @endphp
 
