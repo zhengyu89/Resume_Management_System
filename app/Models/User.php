@@ -35,7 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // A user can have only one resume
-    public function resumes()
+    public function resume()
     {
         return $this->hasOne(UserResume::class);
     }

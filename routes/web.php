@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TalentSearchController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -16,9 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/talent_search', function () {
-    return view('TalentSearch');
-})->name('talent_search');
+
+
+Route::get('/talent_search', [TalentSearchController::class, 'index'])->name('talent_search');
 
 Route::get('/FAQ', function () {
     return view('FAQ');
