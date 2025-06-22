@@ -68,9 +68,9 @@
 
                             {{-- Profile Popup --}}
                             <!-- Slide-in Sidebar -->
-                            <div id="profilePopup" class=" absolute bg-white shadow-lg rounded-md border mt-2 w-48 right-0 z-50 p-4 space-y-3"
+                            <div id="profilePopup" class=" hidden absolute bg-white shadow-lg rounded-md border mt-2 w-48 right-0 z-50 p-4 space-y-3"
                                 style="top: 3rem;"> <!-- Adjust top value to position below the icon -->
-                                <a href="{{ route('dashboard') }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">View Profile</a>
+                                <a href="{{ route('dashboard.show', Auth::user()->id) }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">View Profile</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">
