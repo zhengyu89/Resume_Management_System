@@ -56,9 +56,9 @@
                         <div class="relative"> {{-- Added a wrapper div for positioning the popup --}}
                             <a class="no-underline relative" id="profileLink">
                                 <div class="relative">
-                                    @if(isset($user) && $user?->profile_picture)
+                                    @if(Auth::user()?->resume?->profile_pic)
                                     <img class="h-12 w-12 rounded-full border-4 border-white shadow-lg object-cover"
-                                        src="{{ $user->profile_picture }}"
+                                        src="{{ asset(Auth::user()->resume->profile_pic)}}"
                                         alt="Profile Picture">
                                     @else
                                     <i class="bx bx-user h-12 w-12 rounded-full border-4 border-white shadow-lg text-gray-400 flex items-center justify-center text-2xl"></i>

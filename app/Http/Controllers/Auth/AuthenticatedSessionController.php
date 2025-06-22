@@ -29,6 +29,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $request->session()->flash('just_logged_in', true);
+
         $userId = Auth::id();
 
         return redirect()->intended(route('dashboard.show',['id' => $userId], absolute: false));
