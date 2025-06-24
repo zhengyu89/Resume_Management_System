@@ -152,11 +152,12 @@
                         <div class="space-y-6">
 
                             <!-- About Section -->
-                            <div class="bg-white rounded-lg shadow-md p-6">
+                            <div x-data="{ editMode: false }" class="bg-white rounded-lg shadow-md p-6">
                                 <div class="flex justify-between items-center mb-4">
                                     <h3 class="text-xl font-semibold text-gray-900">About</h3>
+                                    <!-- Edit Button (hidden if not authorized user) -->
                                     @if(Auth::id() == $id)
-                                        <button class="text-blue-500 hover:text-blue-700 transition-colors">
+                                        <button @click="editMode = !editMode" class="text-blue-500 hover:text-blue-700 transition-colors">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
@@ -165,9 +166,26 @@
                                         </button>
                                     @endif
                                 </div>
-                                <p class="text-gray-600 leading-relaxed">
+                                <!-- Display about content -->
+                                <p x-show="!editMode" class="text-gray-600 leading-relaxed">
                                     {{ $user->resume->about ?? '' }}
                                 </p>
+                                <!-- Edit Form -->
+                                @if(Auth::id() == $id)
+                                    <form x-show="editMode" x-cloak method="POST" action="{{ route('dashboard.resume.update', $user->resume->id) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        <textarea name="about" class="w-full border rounded p-2 text-sm" rows="4" placeholder="Write something about yourself...">{{ old('about', $user->resume->about ?? '') }}</textarea>
+                                        <div class="mt-2 flex space-x-2">
+                                            <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 text-sm">
+                                                Save
+                                            </button>
+                                            <button type="button" @click="editMode = false" class="bg-gray-300 text-gray-700 px-4 py-1 rounded hover:bg-gray-400 text-sm">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                @endif
                             </div>
 
                             <!-- Work Experience Section -->
@@ -188,8 +206,10 @@
                                     <div class="border-l-4 border-blue-500 pl-4 mb-6 last:mb-0">
                                         <div class="flex justify-between items-start mb-2">
                                             <h4 class="text-lg font-medium text-gray-900">{{ $experience->position }}</h4>
-                                            <span class="text-sm text-gray-500">{{ $experience->date_end->format('F Y') }} -
-                                                {{ $experience->date_end ? $experience->date_end->format('F Y') : 'Present' }}</span>
+                                            <span class="text-sm text-gray-500">
+                                                {{ $experience->date_start ? $experience->date_start->format('F Y') : 'Unknown'}} -
+                                                {{ $experience->date_end ? $experience->date_end->format('F Y') : 'Present' }}
+                                            </span>
                                         </div>
                                         <p class="text-blue-600 font-medium mb-2">{{ $experience->company_name }}</p>
                                         <p class="text-gray-600">{{ $experience->description }}</p>
@@ -198,11 +218,11 @@
                             </div>
 
                             <!-- Education Section -->
-                            <div class="bg-white rounded-lg shadow-md p-6">
+                            <div id="education-section" class="bg-white rounded-lg shadow-md p-6">
                                 <div class="flex justify-between items-center mb-4">
                                     <h3 class="text-xl font-semibold text-gray-900">Education</h3>
                                     @if(Auth::id() == $id)
-                                        <button class="text-blue-500 hover:text-blue-700 transition-colors">
+                                        <button onclick="toggleEducationEdit()" class="text-blue-500 hover:text-blue-700 transition-colors">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
@@ -215,18 +235,62 @@
                                 @foreach($user->resume->educations as $education)
                                     <div class="border-l-4 border-green-500 pl-4 mb-6 last:mb-0">
                                         <div class="flex justify-between items-start mb-2">
-                                            <h4 class="text-lg font-medium text-gray-900">{{ $education->studyField->name }}
-                                            </h4>
-                                            <span class="text-sm text-gray-500">{{ $education->date_end->format('F Y') }} -
-                                                {{ $experience->date_end ? $experience->date_end->format('F Y') : 'Present' }}</span>
+                                            <h4 class="text-lg font-medium text-gray-900">{{ $education->studyField->name }}</h4>
+                                            <!-- Edit Icon (Only shows in editing mode) -->
+                                            @if(Auth::id() == $id)
+                                            <div class="mt-2 text-right">
+                                                <button onclick="openEducationModal({{ $education->id }})" class="education-edit-btn hidden text-blue-500 hover:text-blue-700">
+                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M15.232 5.232l3.536 3.536M16.732 3.732a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            @endif
                                         </div>
                                         <p class="text-green-600 font-medium mb-2">{{ $education->school_name }}</p>
+                                        <p class="text-sm text-gray-500">
+                                            {{ $education->date_start ? $education->date_start->format('F Y') : 'Unknown'}} -
+                                            {{ $education->date_end ? $education->date_end->format('F Y') : 'Present' }}
+                                        </p>
                                         @if($education->gpa)
                                             <p class="text-gray-600">GPA: {{ $education->gpa }}</p>
                                         @endif
+                                        
+                                        <!-- Edit Modal -->
+                                        <div id="modal-education-{{ $education->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+                                                <button onclick="closeEducationModal({{ $education->id }})" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
+                                                <h2 class="text-lg font-semibold mb-4">Edit Education</h2>
+                                                @include('educations._edit_form', ['education' => $education])
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
 
+                                <!-- Add Education Record Button (Only shows in editing mode) -->
+                                @if(Auth::id() == $id)
+                                <div id="add-education-btn" class="mt-4 hidden">
+                                    <button onclick="openEducationModal('create')"
+                                        class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                        </svg>
+                                        Add Education Record
+                                    </a>
+                                </div>
+                                @endif
+                                
+                                @if(Auth::id() == $id)
+                                <!-- Create Modal -->
+                                <div id="modal-education-create" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+                                        <button onclick="closeEducationModal('create')" class="absolute top-2 right-2 text-gray-500 hover:text-red-600">&times;</button>
+                                        <h2 class="text-lg font-semibold mb-4">Add Education</h2>
+                                        @include('educations._create_form')
+                                    </div>
+                                </div>
+                                @endif
                             </div>
 
                             <!-- Uploaded Section -->
@@ -274,3 +338,25 @@
     @endsection
 
 </x-app-layout>
+
+<script>
+function toggleEducationEdit() {
+    const buttons = document.querySelectorAll('.education-edit-btn');
+    const addBtn = document.getElementById('add-education-btn');
+
+    buttons.forEach(btn => btn.classList.toggle('hidden'));
+    if (addBtn) {
+        addBtn.classList.toggle('hidden');
+    }
+}
+
+function openEducationModal(id) {
+    document.getElementById(`modal-education-${id}`).classList.remove('hidden');
+    document.getElementById(`modal-education-${id}`).classList.add('flex');
+}
+
+function closeEducationModal(id) {
+    document.getElementById(`modal-education-${id}`).classList.add('hidden');
+    document.getElementById(`modal-education-${id}`).classList.remove('flex');
+}
+</script>
