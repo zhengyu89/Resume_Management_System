@@ -39,7 +39,7 @@
             <!-- Min Experience Filter -->
             <div>
                 <label class="block font-semibold mb-1">Minimum Work Experience (years)</label>
-                <input type="number" name="min_experience" min="0" class="w-full border rounded px-3 py-2" value="{{ request('min_experience') }}">
+                <input type="number" name="min_experience" min="0" class="w-full border rounded px-3 py-2" placeholder="0" value="{{ request('min_experience') }}">
             </div>
         </div>
 
@@ -51,26 +51,33 @@
     </form>
 
     <!-- Results -->
-    <div class="space-y-6">
+    <div class="space-y-3">
         @forelse($resumes as $resume)
-            <div class="bg-white shadow rounded-lg p-5">
+            <div class="relative flex items-center justify-between bg-white shadow rounded-lg p-2 border border-gray-200">
                 <div class="flex items-center space-x-4">
                     <img src="{{ asset($resume->profile_pic ?? 'assets/profile_pics/default.jpg') }}" class="w-20 h-20 object-cover rounded-full" alt="Profile Picture">
                     <div>
-                        <h2 class="text-xl font-bold">{{ $resume->user->name }}</h2>
+                        <h2 class="text-xl font-bold text-indigo-700">{{ $resume->user->name }}</h2>
                         <p class="text-sm text-gray-600">{{ $resume->title }}</p>
-                        <p class="text-sm mt-1">
+                        <p class="text-sm mt-1 text-gray-500">
                             <strong>Study Field:</strong>
-                            {{ $resume->educations->first()?->studyField->name ?? 'N/A' }}
+                            {{ $resume->educations->pluck('studyField.name')->join(', ') }}
                             |
                             <strong>Languages:</strong>
                             {{ $resume->languages->pluck('language.name')->join(', ') }}
                             |
                             <strong>Experience:</strong>
-                            {{ $resume->total_experience ?? 0 }} years
+                            {{ $resume->work_exp_display }}
                         </p>
                     </div>
                 </div>
+
+                <!-- Arrow Button (direct to talent's profile) -->
+                <a href="{{ route('profile', $resume->id) }}" class="absolute right-0 h-20 mb-0 w-14 flex items-center justify-center border-l border-gray-300 text-indigo-600 hover:text-indigo-800 transition" title="View Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>                    
             </div>
         @empty
             <div class="text-center text-gray-500">No matching talents found.</div>
