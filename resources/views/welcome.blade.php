@@ -5,7 +5,6 @@
 
 <body class="font-sans bg-white text-gray-900">
 @section('content')
-    <!-- Hero Section -->
     <section class="py-16 px-4">
         <div class="container mx-auto max-w-6xl text-center">
             <h1 class="text-5xl md:text-5xl font-bold text-gray-900 mb-4 max-w-4xl mx-auto leading-tight">
@@ -21,7 +20,6 @@
                 </a>
             </div>
 
-            <!-- Embedded Video -->
             <div class="max-w-2xl mx-auto aspect-w-16 aspect-h-9">
                 <iframe class="w-full h-64 md:h-96 rounded-lg shadow-lg"
                         src="https://www.youtube.com/embed/r-4uzk7RhcY"
@@ -33,52 +31,52 @@
         </div>
     </section>
 
-    <!-- Numbers That Matter Section -->
-<section class="py-16 px-4 bg-gray-50">
-    <div class="container mx-auto max-w-6xl">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Numbers That Matter</h2>
-        <p class="text-gray-600 text-center mb-12 max-w-4xl mx-auto">
+    <section class="py-20 px-6 bg-gray-50">
+    <div class="container mx-auto max-w-6xl text-center">
+        <h2 class="text-4xl font-extrabold text-gray-900 mb-6">Numbers That Matter</h2>
+        <p class="text-lg text-gray-600 mb-16 mx-auto max-w-3xl leading-relaxed">
             We're proud to support thousands of students and professionals with the tools they need to build standout resumes and find great jobs. Here's a quick look at what we've achieved together.
         </p>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-users text-blue-600 text-2xl"></i>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div class="transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-5 shadow-md">
+                    <span class="text-3xl font-bold text-indigo-600">✨</span>
                 </div>
-                <div class="text-3xl font-bold text-gray-900 mb-2">1,200+</div>
-                <div class="text-gray-600 text-sm">Happy Users</div>
+                <div class="text-4xl font-extrabold text-gray-900 mb-2">1,200+</div>
+                <div class="text-gray-500 text-md">Happy Users</div>
             </div>
 
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-file-alt text-blue-600 text-2xl"></i>
+            <div class="transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-5 shadow-md">
+                    <span class="text-3xl font-bold text-indigo-600">📄</span>
                 </div>
-                <div class="text-3xl font-bold text-gray-900 mb-2">3,500+</div>
-                <div class="text-gray-600 text-sm">Resumes Created</div>
+                <div class="text-4xl font-extrabold text-gray-900 mb-2">3,500+</div>
+                <div class="text-gray-500 text-md">Resumes Created</div>
             </div>
 
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-briefcase text-blue-600 text-2xl"></i>
+            <div class="transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-5 shadow-md">
+                    <span class="text-3xl font-bold text-indigo-600">🎯</span>
                 </div>
-                <div class="text-3xl font-bold text-gray-900 mb-2">900+</div>
-                <div class="text-gray-600 text-sm">Jobs Matched</div>
+                <div class="text-4xl font-extrabold text-gray-900 mb-2">900+</div>
+                <div class="text-gray-500 text-md">Jobs Matched</div>
             </div>
 
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-building text-blue-600 text-2xl"></i>
+            <div class="transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-5 shadow-md">
+                    <span class="text-3xl font-bold text-indigo-600">🤝</span>
                 </div>
-                <div class="text-3xl font-bold text-gray-900 mb-2">50+</div>
-                <div class="text-gray-600 text-sm">Recruiters</div>
+                <div class="text-4xl font-extrabold text-gray-900 mb-2">250+</div>
+                <div class="text-gray-500 text-md">Recruiters</div>
             </div>
         </div>
     </div>
 </section>
 
 
-    <!-- Testimonials Section -->
+
+
     <section class="py-16 px-4">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">What Our Partners Say</h2>
@@ -147,8 +145,7 @@
             </div>
         </div>
     </section>
-    <!-- Success Stories Section -->
-<section class="py-16 px-4 bg-gray-50">
+    <section class="py-16 px-4 bg-gray-50">
     <div class="container mx-auto max-w-6xl">
         <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Success Stories</h2>
 
@@ -187,7 +184,6 @@
 </section>
 
 
-    <!-- Team Section -->
     <section class="py-16 px-4 bg-white-50">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Our Lovely Team</h2>
