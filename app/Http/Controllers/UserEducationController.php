@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserEducation;
+use App\Models\UserResume;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,8 +91,17 @@ class UserEducationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserEducation $userEducation)
-    {
-        //
+    public function destroy(UserEducation $education)
+    {   
+        // Check if the logged-in user owns this education record
+        if ($education->resume->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $education->delete();
+
+        return redirect()
+            ->route('dashboard.show', Auth::id())
+            ->with('success', 'Education record deleted successfully.');
     }
 }
