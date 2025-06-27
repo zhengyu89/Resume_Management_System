@@ -401,7 +401,12 @@
                                 @foreach($user->resume->documents as $document)
                                 <div class="border-l-4 border-orange-500 pl-4 mb-6 last:mb-0">
                                     <div class="flex justify-between items-start mb-2">
-                                        <h4 class="text-lg font-medium text-gray-900">{{ basename($document->file_path) }}</h4>
+                                        @php
+                                        $basename = basename($document->file_path);
+                                        $parts = explode('-', $basename, 2);
+                                        $displayName = $parts[1] ?? basename;
+                                        @endphp
+                                        <h4 class="text-lg font-medium text-gray-900">{{ $displayName }}</h4>
                                         @if(Auth::id() == $id)
                                         <!-- Delete Button (Hidden by Default) -->
                                         <button onclick="document.getElementById('confirm-delete-{{ $document->id }}').classList.remove('hidden')" 
@@ -415,7 +420,7 @@
                                     </div>
                                     <div class="flex gap-4 text-sm text-blue-600">
                                         <a href="{{ asset($document->file_path) }}" target="_blank" class="underline hover:text-blue-800">Preview</a>
-                                        <a href="{{ asset($document->file_path) }}" download class="underline hover:text-blue-800">Download</a>
+                                        <a href="{{ asset($document->file_path) }}" download="{{ $displayName }}" class="underline hover:text-blue-800">Download</a>
                                     </div>
 
                                     <!-- Delete Confirmation Modal -->

@@ -33,13 +33,14 @@ class UserDocumentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:pdf|max:2048', // Max 2MB PDF
+            'file' => 'required|file|mimes:pdf',
         ]);
 
         $user = Auth::user();
-        $file = $request->file('file');
 
-        $fileName = $file->getClientOriginalName();
+        $originalName = $request->file('file')->getClientOriginalName();
+        $uniqueName = uniqid() . '-' . $originalName;
+        
         $destination = public_path('assets/documents');
 
         // Ensure directory exists
@@ -47,9 +48,9 @@ class UserDocumentController extends Controller
             mkdir($destination, 0755, true);
         }
 
-        $file->move($destination, $fileName);
+        $request->file('file')->move($destination, $uniqueName);
 
-        $relativePath = 'assets/documents/' . $fileName;
+        $relativePath = "assets/documents/" . $uniqueName;
 
         $user->resume->documents()->create([
             'file_path' => $relativePath,
