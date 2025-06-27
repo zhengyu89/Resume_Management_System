@@ -40,9 +40,14 @@ class UserResume extends Model
         return $this->hasMany(UserWorkExperience::class, 'resume_id');
     }
 
+    public function userLanguages()
+    {
+        return $this->hasMany(UserLanguage::class);
+    }
+
     public function languages()
     {
-        return $this->hasMany(UserLanguage::class, 'resume_id');
+        return $this->belongsToMany(Language::class, 'user_languages', 'resume_id', 'language_id');
     }
 
     public function documents()

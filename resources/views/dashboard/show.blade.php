@@ -107,6 +107,19 @@
                                         </svg>
                                         <span class="text-sm">{{ $user->email ?? 'Unknown Email' }}</span>
                                     </div>
+                                    <!-- Languages -->
+                                    @if($user->resume->languages->isNotEmpty())
+                                    <div class="mt-4">
+                                        <h4 class="text-sm font-semibold text-gray-700 mb-1">Languages</h4>
+                                        <div class="flex flex-wrap gap-2">
+                                            @foreach($user->resume->languages->sortBy('name') as $language)
+                                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                                                    {{ $language->name }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    @endif
 
                                     <!-- Edit & Delete Buttons -->
                                     @if(Auth::id() == $id)

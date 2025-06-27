@@ -61,6 +61,8 @@ class UserResumeController extends Controller
             'about' => 'nullable|string|max:5000',
             'address' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:20',
+            'languages' => 'nullable|array',
+            'languages.*' => 'exists:languages,id',
             'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg',
             'cover_pic' => 'nullable|image|mimes:jpeg,png,jpg',
         ]);
@@ -81,6 +83,9 @@ class UserResumeController extends Controller
         }
         if ($request->has('phone_number')) {
             $resume->phone_number = $request->input('phone_number');
+        }
+        if ($request->has('languages')) {
+            $resume->languages()->sync($request->input('languages'));
         }
         
         // Store Profile Picture

@@ -60,11 +60,12 @@
     <!-- Results -->
     <div class="space-y-3">
         @forelse($resumes as $resume)
-            <div class="relative flex items-center justify-between bg-white shadow rounded-lg p-2 border border-gray-200">
+        <a href="{{ route('profile', $resume->id) }}" class="block no-underline group text-inherit">
+            <div class="relative flex items-center justify-between bg-white shadow rounded-lg p-2 border border-gray-200 hover:bg-gray-50 transition">
                 <div class="flex items-center space-x-4">
                     <img src="{{ asset($resume->profile_pic ?? 'assets/profile_pics/default.jpg') }}" class="w-20 h-20 object-cover rounded-full" alt="Profile Picture">
                     <div>
-                        <h2 class="text-xl font-bold text-indigo-700">{{ $resume->user->name }}</h2>
+                        <h2 class="text-xl font-bold text-indigo-700 group-hover:underline">{{ $resume->user->name }}</h2>
                         <p class="text-sm text-gray-600">{{ $resume->title }}</p>
                         <p class="text-sm mt-1 text-gray-500">
                             @php
@@ -81,13 +82,14 @@
                     </div>
                 </div>
 
-                <!-- Arrow Button (direct to talent's profile) -->
-                <a href="{{ route('profile', $resume->id) }}" class="absolute right-0 h-20 mb-0 w-14 flex items-center justify-center border-l border-gray-300 text-indigo-600 hover:text-indigo-800 transition" title="View Profile">
+                <!-- Arrow Button -->
+                <div class="absolute right-0 h-20 mb-0 w-14 flex items-center justify-center border-l border-gray-300 text-indigo-600 group-hover:text-indigo-800 transition" title="View Profile">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
                     </svg>
-                </a>                    
+                </div>                    
             </div>
+        </a>
         @empty
             <div class="text-center text-gray-500">No matching talents found.</div>
         @endforelse

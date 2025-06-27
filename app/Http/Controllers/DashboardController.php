@@ -29,7 +29,9 @@ class DashboardController extends Controller
       return redirect()->route("profile", ["id" => $id]);
     }
 
-    return view('dashboard.show', compact('user', 'id'));
+    $availableLanguages = Language::orderBy('name')->get();
+
+    return view('dashboard.show', compact('user', 'id', 'availableLanguages'));
   }
 
   public function profile($id)
@@ -41,7 +43,9 @@ class DashboardController extends Controller
       return redirect()->route("dashboard.show", ["id" => $id]);
     }
 
-    return view('dashboard.show', compact('user', 'id')); 
+    $availableLanguages = Language::orderBy('name')->get();
+
+    return view('dashboard.show', compact('user', 'id', 'availableLanguages')); 
   }
 
   public function destroy(Request $request)

@@ -26,6 +26,18 @@
                 value="{{ old('phone_number', $user->resume->phone_number) }}">
     </div>
 
+    <div class="mb-4">
+        <label for="languages" class="block text-sm font-medium text-gray-700">Languages</label>
+        <select name="languages[]" id="languages" multiple>
+            @foreach($availableLanguages as $language)
+                <option value="{{ $language->id }}" 
+                    {{ in_array($language->id, $user->resume->languages->pluck('id')->toArray()) ? 'selected' : '' }}>
+                    {{ $language->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
     <div class="flex justify-end gap-2 mt-6">
         <button type="button" onclick="closeProfileModal()" class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">
             Cancel
@@ -35,3 +47,33 @@
         </button>
     </div>
 </form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect("#languages", {
+            plugins: ['remove_button'],
+            persist: false,
+            create: false,
+            maxItems: null,
+            placeholder: "Select languages...",
+            onInitialize: function () {
+                const control = this.control;
+
+                // Apply Tailwind styling to the internal control div
+                control.classList.add(
+                    'w-full',
+                    'border',
+                    'border-gray-300',
+                    'rounded-md',
+                    'px-3',
+                    'py-2',
+                    'focus-within:ring',
+                    'focus-within:ring-blue-200',
+                    'text-sm',
+                    'text-gray-900',
+                    'form-select',
+                );
+            }
+        });
+    });
+</script>
