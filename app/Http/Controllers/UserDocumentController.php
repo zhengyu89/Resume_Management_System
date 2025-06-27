@@ -6,6 +6,8 @@ use App\Models\UserDocument;
 use App\Models\UserResume;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserDocumentController extends Controller
 {
@@ -14,12 +16,7 @@ class UserDocumentController extends Controller
      */
     public function index()
     {
-        // Assuming you want to show all documents of the current user's resumes
-        $documents = UserDocument::whereHas('resume', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->get();
-
-        return view('dashboard.documents.index', compact('documents'));
+        //
     }
 
     /**
@@ -27,10 +24,7 @@ class UserDocumentController extends Controller
      */
     public function create()
     {
-        // Let user select resume to attach document to
-        $resumes = UserResume::where('user_id', Auth::id())->get();
-
-        return view('dashboard.documents.create', compact('resumes'));
+        //
     }
 
     /**
@@ -39,40 +33,57 @@ class UserDocumentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'resume_id' => 'required|exists:user_resumes,id',
-            'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'file' => 'required|file|mimes:pdf|max:2048', // Max 2MB PDF
         ]);
 
-        // Check ownership of resume
-        $resume = UserResume::where('id', $request->resume_id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+        $user = Auth::user();
+        $file = $request->file('file');
 
-        $filePath = UserDocument::storeResumeFile($request->file('file'));
+        $fileName = $file->getClientOriginalName();
+        $destination = public_path('assets/documents');
 
-        UserDocument::create([
-            'resume_id' => $resume->id,
-            'file_path' => $filePath,
+        // Ensure directory exists
+        if (!file_exists($destination)) {
+            mkdir($destination, 0755, true);
+        }
+
+        $file->move($destination, $fileName);
+
+        $relativePath = 'assets/documents/' . $fileName;
+
+        $user->resume->documents()->create([
+            'file_path' => $relativePath,
         ]);
 
-        return redirect()->route('dashboard.documents.index')->with('success', 'Document uploaded.');
+        return back()->with('success', 'Resume uploaded successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UserDocument $userDocument)
+    public function show(UserDocument $document)
     {
-        return view('dashboard.documents.show', compact('document'));
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserDocument $userDocument)
+    public function destroy(UserDocument $document)
     {
-        $userDocument->delete();
+        // Check if the logged-in user owns this document
+        if ($document->resume->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
-        return redirect()->route('dashboard.documents.index')->with('success', 'Document deleted.');
+        $absolutePath = public_path($document->file_path);
+
+        if (file_exists($absolutePath)) {
+            unlink($absolutePath);
+        }
+
+        $document->delete();
+
+        return back()->with('success', 'Document deleted successfully.');
     }
 }

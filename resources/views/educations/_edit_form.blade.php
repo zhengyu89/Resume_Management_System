@@ -8,26 +8,27 @@
                 value="{{ old('school_name', $education->school_name) }}" required>
     </div>
 
-    @php
-        $levels = ['High School', 'Diploma', "Bachelor's", "Master's", 'PhD'];
-        $selectedLevel = old('education_level', $education->education_level);
-    @endphp
-
-    <!-- <div class="mb-4">
+    <div class="mb-4">
         <label class="block text-gray-700 font-medium">Education Level</label>
-        <select name="education_level" class="form-select w-full border border-gray-300 rounded-md px-3 py-2 focus:ring focus:ring-blue-200">
-            <option value="">-- Select Level --</option>
+        <select id="education_level_{{ $education->id }}" name="education_level" autocomplete="off" class="tom-select-field" required>
+            <option value="" disabled selected>Select or type education level...</option>
+            @php
+                $levels = ['High School', 'Diploma', 'Bachelor\'s', 'Master\'s', 'PhD'];
+                $current = old('education_level', $education->education_level ?? '');
+                if ($current && !in_array($current, $levels)) {
+                    $levels[] = $current;
+                }
+            @endphp
             @foreach($levels as $level)
-                <option value="{{ $level }}" {{ $selectedLevel == $level ? 'selected' : '' }}>
-                    {{ $level }}
-                </option>
+                <option value="{{ $level }}" {{ $current === $level ? 'selected' : '' }}>{{ $level }}</option>
             @endforeach
         </select>
-    </div> -->
+    </div>
 
     <div class="mb-4">
         <label class="block text-gray-700 font-medium">Study Field</label>
-        <select name="study_field_id" class="form-select w-full border border-gray-300 rounded-md px-3 py-1 focus:ring focus:ring-blue-200">
+        <select name="study_field_id" class="form-select w-full border border-gray-300 rounded-md px-3 py-1 focus:ring focus:ring-blue-200" required>
+            <option value="" disabled selected>Select a study field</option>
             @foreach(\App\Models\StudyField::all() as $field)
                 <option value="{{ $field->id }}" {{ $education->study_field_id == $field->id ? 'selected' : '' }}>
                     {{ $field->name }}
@@ -50,7 +51,7 @@
 
     <div class="mb-4">
         <label class="block text-gray-700 font-medium">GPA</label>
-        <input type="text" name="gpa" class="form-input w-full border border-gray-300 rounded-md px-3 py-1 focus:ring focus:ring-blue-200"
+        <input type="number" step="0.01" min="0" max="4" name="gpa" class="form-input w-full border border-gray-300 rounded-md px-3 py-1 focus:ring focus:ring-blue-200"
                 value="{{ old('gpa', $education->gpa) }}">
     </div>
 
@@ -67,7 +68,7 @@
         Delete Education
     </button>
     <!-- Save btn -->
-    <button type="button" onclick="this.disabled=true; submitEducationForm({{ $education->id }});" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+    <button type="button" onclick="submitEducationForm({{ $education->id }});" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
         Save
     </button>
 </div>
@@ -114,4 +115,33 @@ function submitDeleteForm(id) {
         form.submit();
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    @foreach($user->resume->educations as $education)
+        new TomSelect('#education_level_{{ $education->id }}', {
+            create: true,
+            persist: false,
+            maxItems: 1,
+            placeholder: 'Select or type education level...',
+            onInitialize: function () {
+                const control = this.control;
+
+                // Apply Tailwind styling to the internal control div
+                control.classList.add(
+                    'w-full',
+                    'border',
+                    'border-gray-300',
+                    'rounded-md',
+                    'px-3',
+                    'py-2',
+                    'focus-within:ring',
+                    'focus-within:ring-blue-200',
+                    'text-sm',
+                    'text-gray-900',
+                    'form-select',
+                );
+            }
+        });
+    @endforeach
+});
 </script>
