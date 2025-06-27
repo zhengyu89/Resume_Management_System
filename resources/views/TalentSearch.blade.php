@@ -9,6 +9,13 @@
 
     <!-- Search Filters -->
     <form method="GET" action="{{ route('talent_search') }}" class="mb-8 bg-white shadow-md p-6 rounded-lg">
+            <!-- Username Search -->
+            <div class="mb-4">
+                <label for="username" class="block font-semibold mb-1">Search by Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter username"
+                    value="{{ request('username') }}"
+                    class="w-full border rounded px-3 py-2" />
+            </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <!-- Study Field Filter -->
             <div>
@@ -60,12 +67,14 @@
                         <h2 class="text-xl font-bold text-indigo-700">{{ $resume->user->name }}</h2>
                         <p class="text-sm text-gray-600">{{ $resume->title }}</p>
                         <p class="text-sm mt-1 text-gray-500">
+                            @php
+                                $studyFields = $resume->educations->pluck('studyField.name')->filter()->unique();
+                                $languages = $resume->languages->sortBy('name')->pluck('name');
+                            @endphp
                             <strong>Study Field:</strong>
-                            {{ $resume->educations->pluck('studyField.name')->join(', ') }}
-                            |
+                            {{ $studyFields->isNotEmpty() ? $studyFields->join(', ') : 'none' }} |
                             <strong>Languages:</strong>
-                            {{ $resume->languages->pluck('language.name')->join(', ') }}
-                            |
+                            {{ $languages->isNotEmpty() ? $languages->join(', ') : 'none' }} |
                             <strong>Experience:</strong>
                             {{ $resume->work_exp_display }}
                         </p>

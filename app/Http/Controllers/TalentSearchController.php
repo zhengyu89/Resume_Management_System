@@ -15,13 +15,19 @@ class TalentSearchController extends Controller
     public function index(Request $request)
     {
         $request->validate([
+            'username' => 'nullable|string|max:255',
             'study_field_id' => 'nullable|exists:study_fields,id',
             'language_id' => 'nullable|exists:languages,id',
             'min_experience' => 'nullable|numeric|min:0',
         ]);
 
-        $query = UserResume::query()->with(['user', 'educations.studyField', 'languages.language', 'workExperiences']);
+        $query = UserResume::query()->with(['user', 'educations.studyField', 'languages', 'workExperiences']);
 
+        if ($request->filled('username')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->username . '%');
+            });
+        }
         // Apply filters only if user selected filter
         if ($request->filled('study_field_id')) {
             $query->whereHas('educations', function($q) use ($request) {
