@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
                 $resume->educations()->create([
                     'study_field_id' => $field->id,
                     'school_name' => $faker->company . ' University',
+                    'education_level' => $faker->randomElement(['High School', 'Diploma', "Bachelor's", "Master's", 'PhD']),
                     'date_start' => $start,
                     'date_end' => $faker->dateTimeBetween($start, 'now'),
                     'gpa' => $faker->randomFloat(2, 2.5, 4.0),

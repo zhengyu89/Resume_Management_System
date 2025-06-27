@@ -24,6 +24,20 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        <!-- Role Selection -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Login as')" />
+
+            <select id="role" name="role" required class="block mt-1 w-full px-2 py-2 border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-900 dark:text-white">
+                <option value="">-- Select Role --</option>
+                <option value="employee" {{ old('role') === 'employee' ? 'selected' : '' }}>Employee</option>
+                <option value="employer" {{ old('role') === 'employer' ? 'selected' : '' }}>Employer</option>
+                <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+            </select>
+
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">

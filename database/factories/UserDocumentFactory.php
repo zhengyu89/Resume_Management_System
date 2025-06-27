@@ -21,7 +21,7 @@ class UserDocumentFactory extends Factory
     {
         return [
             'resume_id' => \App\Models\UserResume::factory(),
-            'file_path' => 'assets/resume/default.pdf',
+            'file_path' => 'assets/documents/default.pdf',
         ];
     }
 }

@@ -16,6 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -32,6 +33,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomResetPassword($token));
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isEmployer()
+    {
+        return $this->role === 'employer';
+    }
+
+    public function isEmployee()
+    {
+        return $this->role === 'employee';
     }
 
     // A user can have only one resume

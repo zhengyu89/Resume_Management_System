@@ -33,7 +33,8 @@ class UserEducationController extends Controller
         $validated = $request->validate([
             'school_name' => 'required|string|max:255',
             'study_field_id' => 'nullable|exists:study_fields,id',
-            'date_start' => 'nullable|date',
+            'education_level' => 'nullable|string|max:255',
+            'date_start' => 'required|date',
             'date_end' => 'nullable|date|after_or_equal:date_start',
             'gpa' => 'nullable|numeric|between:0,4.00',
         ]);
@@ -76,16 +77,16 @@ class UserEducationController extends Controller
         $validated = $request->validate([
             'school_name' => 'required|string|max:255',
             'study_field_id' => 'nullable|exists:study_fields,id',
-            'date_start' => 'nullable|date',
+            'education_level' => 'nullable|string|max:255',
+            'date_start' => 'required|date',
             'date_end' => 'nullable|date|after_or_equal:date_start',
             'gpa' => 'nullable|numeric|between:0,4.00',
         ]);
 
         $education->update($validated);
 
-        return redirect()
-            ->route('dashboard.show', auth()->id())
-            ->with('success', 'Education updated successfully!');
+        return redirect()->route('dashboard.show', auth()->id())
+                        ->with('success', 'Education updated successfully!');
     }
 
     /**
