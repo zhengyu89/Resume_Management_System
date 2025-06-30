@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             
             $languages = Language::inRandomOrder()->take(rand(1, 3))->get();
             foreach($languages as $lang) {
-                $resume->languages()->create(['language_id' => $lang->id]);
+                $resume->languages()->attach($lang->id);
             }
 
             $fields = StudyField::inRandomOrder()->take(rand(1, 2))->get();
