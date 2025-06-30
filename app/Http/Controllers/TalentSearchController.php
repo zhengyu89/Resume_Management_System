@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\UserResume;
 use App\Models\Language;
 use App\Models\StudyField;
-use Carbon\Carbon;
 
 class TalentSearchController extends Controller
 {
@@ -15,53 +14,45 @@ class TalentSearchController extends Controller
      */
     public function index(Request $request)
     {
-        // Get filters from request
-        $studyFieldId = $request->input('study_field_id');
-        $languageId = $request->input('language_id');
-        $minExperience = $request->input('min_experience', 0);
+        $request->validate([
+            'username' => 'nullable|string|max:255',
+            'study_field_id' => 'nullable|exists:study_fields,id',
+            'language_id' => 'nullable|exists:languages,id',
+            'min_experience' => 'nullable|numeric|min:0',
+        ]);
 
-        // Get all languages and study fields for filters
-        $languages = Language::all();
+        $query = UserResume::query()->with(['user', 'educations.studyField', 'languages', 'workExperiences']);
+
+        if ($request->filled('username')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->username . '%');
+            });
+        }
+        // Apply filters only if user selected filter
+        if ($request->filled('study_field_id')) {
+            $query->whereHas('educations', function($q) use ($request) {
+                $q->where('study_field_id', $request->study_field_id);
+            });
+        }
+
+        if ($request->filled('language_id')) {
+            $query->whereHas('languages', function($q) use ($request) {
+                $q->where('language_id', $request->language_id);
+            });
+        }
+
+        if ($request->filled('min_experience')) {
+            $query->whereHas('workExperiences', function($q) use ($request) {
+                $q->whereRaw('TIMESTAMPDIFF(YEAR, date_start, COALESCE(date_end, CURDATE())) >= ?', [$request->min_experience]);
+            });
+        }
+        
+        $resumes = $query->get();
+
         $studyFields = StudyField::all();
-
-        // Get resumes and filter
-        $resumes = UserResume::with([
-            'user',
-            'educations.studyField',
-            'languages.language',
-            'workExperiences'
-        ])
-        ->when($studyFieldId, function ($query) use ($studyFieldId) {
-            $query->whereHas('educations', function ($q) use ($studyFieldId) {
-                $q->where('study_field_id', $studyFieldId);
-            });
-        })
-        ->when($languageId, function ($query) use ($languageId) {
-            $query->whereHas('languages', function ($q) use ($languageId) {
-                $q->where('language_id', $languageId);
-            });
-        })
-        ->get();
-        $resumes = $resumes->filter(function ($resume) use ($minExperience) {
-            // Calculate total years of experience for this resume
-            $years = $resume->workExperiences->sum(function ($exp) {
-                $start = Carbon::parse($exp->date_start);
-                $end = $exp->date_end ? Carbon::parse($exp->date_end) : now();
-                return $end->diffInYears($start);
-            });
-
-            // Add the calculated experience to the model (for display)
-            $resume->total_experience = $years;
-
-            return $years >= $minExperience;
-        });
+        $languages = Language::all();
 
         // Return view with filtered data
-        return view('TalentSearch', [
-            'resumes' => $resumes,
-            'languages' => $languages,
-            'studyFields' => $studyFields,
-        ]);
+        return view('TalentSearch', compact('resumes', 'studyFields', 'languages'));
     }
-
 }

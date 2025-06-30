@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,10 +28,22 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        $user = Auth::user();
+
+        $selectedRole = $request->input('role');
+
+        if ($user->role !== $selectedRole) {
+            Auth::logout(); // Log out if role doesn't match
+
+            throw ValidationException::withMessages([
+                'role' => 'The selected role does not match your account.',
+            ]);
+        }
+
         $request->session()->regenerate();
 
         $request->session()->flash('just_logged_in', true);
-
+        
         $userId = Auth::id();
 
         return redirect()->intended(route('dashboard.show',['id' => $userId], absolute: false));

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserResume extends Model
 {
@@ -38,9 +40,14 @@ class UserResume extends Model
         return $this->hasMany(UserWorkExperience::class, 'resume_id');
     }
 
+    public function userLanguages()
+    {
+        return $this->hasMany(UserLanguage::class);
+    }
+
     public function languages()
     {
-        return $this->hasMany(UserLanguage::class, 'resume_id');
+        return $this->belongsToMany(Language::class, 'user_languages', 'resume_id', 'language_id');
     }
 
     public function documents()
@@ -58,6 +65,24 @@ class UserResume extends Model
     public function getCoverPicUrlAttribute()
     {
         return $this->cover_pic ? asset($this->cover_pic) : null;
+    }
+
+    public function getWorkExpDisplayAttribute()
+    {
+        $totalYears = 0;
+
+        foreach ($this->workExperiences as $work) {
+            $start = Carbon::parse($work->date_start);
+            $end = $work->date_end ? Carbon::parse($work->date_end) : now();
+            $totalYears += $start->diffInRealYears($end);
+        }
+
+        if ($totalYears <= 0) { return "none"; }
+        else if ($totalYears < 5) { 
+            $ceilTotalYears = ceil($totalYears);
+            return "< {$ceilTotalYears} " . Str::plural("year", $ceilTotalYears);
+        }
+        else { return "≥ 5 years"; }
     }
 
     // ========== Static File Handlers ==========

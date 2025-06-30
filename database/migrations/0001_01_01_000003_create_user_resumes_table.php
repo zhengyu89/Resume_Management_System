@@ -33,11 +33,12 @@ return new class extends Migration
         Schema::create('user_educations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('resume_id')->constrained('user_resumes')->onDelete('cascade');
-            $table->foreignId('study_field_id')->constrained('study_fields')->onDelete('restrict');
+            $table->foreignId('study_field_id')->constrained('study_fields')->onDelete('cascade');
             $table->string('school_name');
+            $table->string('education_level')->nullable();
             $table->date('date_start');
             $table->date('date_end')->nullable();
-            $table->double('gpa');
+            $table->double('gpa')->nullable();
             $table->timestamps();
         });
 

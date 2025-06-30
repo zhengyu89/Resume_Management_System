@@ -19,6 +19,7 @@ class UserEducation extends Model
         'resume_id',
         'study_field_id',
         'school_name',
+        'education_level',
         'date_start',
         'date_end',
         'gpa',

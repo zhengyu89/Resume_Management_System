@@ -34,10 +34,10 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard/profile')->name('dash
     Route::delete('/', [DashboardController::class, 'destroy'])->name('destroy');
 
     // Resource Routes
-    Route::resource('resumes', UserResumeController::class);
+    Route::resource('resume', UserResumeController::class);
     Route::resource('documents', UserDocumentController::class);
     Route::resource('educations', UserEducationController::class);
-    Route::resource('experiences', UserWorkExperienceController::class);
+    Route::resource('workExperiences', UserWorkExperienceController::class);
     Route::resource('languages', UserLanguageController::class);
 });
 
