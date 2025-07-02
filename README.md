@@ -109,5 +109,5 @@ The database schema includes the following tables:
 
 [cite_start]Here is the Entity-Relationship Diagram[cite: 29]:
 
-![ERD Diagram](path/to/your/erd_image.png) 
+![ERD Diagram](public\assets\ERD_Diagram.jpg) 
 *Note: You will need to replace `path/to/your/erd_image.png` with the actual path to the ERD image in your repository.*
