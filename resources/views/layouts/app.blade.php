@@ -53,7 +53,6 @@
                     </nav>
                 </div>
                 <div class="flex items-center space-x-3">
-                    @if (Route::has('login'))
                     <nav class="flex items-center justify-end gap-4">
                         @auth
                         <div class="relative"> {{-- Added a wrapper div for positioning the popup --}}
@@ -74,6 +73,13 @@
                             <div id="profilePopup" class=" hidden absolute bg-white shadow-lg rounded-md border mt-2 w-48 right-0 z-50 p-4 space-y-3"
                                 style="top: 3rem;"> <!-- Adjust top value to position below the icon -->
                                 <a href="{{ route('dashboard.show', Auth::user()->id) }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">View Profile</a>
+
+                                <div class="md:hidden border-t pt-3 space-y-3">
+                                    <a href="{{ route('welcome') }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">Home</a>
+                                    <a href="{{ route('talent_search') }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">Talent Search</a>
+                                    <a href="{{ route('FAQ') }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">FAQ</a>
+                                </div>
+
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">
@@ -86,20 +92,48 @@
                         @else
                         <a
                             href="{{ route('login') }}">
-                            <button class="text-blue-600 hover:text-blue-700 px-4 py-2 rounded-md font-medium text-sm no-underline">
+                            <button class="text-blue-600 hover:text-blue-700 px-4 py-2 rounded-md font-medium text-sm no-underline hidden md:block">
                                 Log In</button>
                         </a>
-
-                        @if (Route::has('register'))
                         <a
                             href="{{ route('register') }}"
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium text-sm no-underline">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium text-sm no-underline hidden md:block">
                             Register</button>
                         </a>
-                        @endif
+                        
+                        <div class="relative md:hidden">
+                            <a class="no-underline relative" >
+                            <i class='bx bx-menu text-3xl' id="navigationLink"></i>
+                            </a>
+                        </div>
+
+                        {{-- Navigation Popup --}}
+                        <!-- Slide-in Sidebar -->
+                        <div id="navigationPopup" class=" hidden absolute bg-white shadow-lg rounded-md border mt-2 w-48 right-0 z-50 p-4 space-y-3"
+                            style="top: 3rem;"> <!-- Adjust top value to position below the icon -->
+                            <div class="border-b pb-3 space-y-3">
+                                <a href="{{ route('welcome') }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">Home</a>
+                                <a href="{{ route('talent_search') }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">Talent Search</a>
+                                <a href="{{ route('FAQ') }}" class="no-underline block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">FAQ</a>
+                            </div>
+
+                            <div class=" flex space-y-3 flex-col gap-y-2">
+                                <a
+                                    href="{{ route('login') }}">
+                                    <button class="w-full text-blue-600 hover:text-blue-700 px-4 py-2 rounded-md font-medium text-sm no-underline">
+                                    Log In</button>
+                                </a>
+                                <a
+                                    href="{{ route('register') }}">
+                                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium text-sm no-underline">
+                                    Register</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        
                         @endauth
                     </nav>
-                    @endif
                 </div>
             </div>
         </div>
