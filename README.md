@@ -1,7 +1,7 @@
 # Resume Management System
 
 This is a web-based platform designed for job seekers and employers. Job seekers can create a profile, upload their resume, and manage their information. Employers can search for talent, view resumes, and contact potential candidates.
-
+<img src="public\assets\ResumeManagerHomepage.png" alt="ERD Diagram" width="1000"/>
 ***
 
 ## 🚀 Project Overview
@@ -109,3 +109,4 @@ The database schema includes the following tables:
 Here is the Entity-Relationship Diagram:
 
 <img src="public/assets/ERD_Diagram.jpg" alt="ERD Diagram" width="600"/>
+
