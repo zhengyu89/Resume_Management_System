@@ -23,6 +23,10 @@ class TalentSearchController extends Controller
 
         $query = UserResume::query()->with(['user', 'educations.studyField', 'languages', 'workExperiences']);
 
+        $query->whereHas('user', function ($q) {
+            $q->where('role', 'employee');
+        });
+
         if ($request->filled('username')) {
             $query->whereHas('user', function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->username . '%');
