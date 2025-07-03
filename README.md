@@ -1,9 +1,12 @@
 # Resume Management System
 
 This is a web-based platform designed for job seekers and employers. Job seekers can create a profile, upload their resume, and manage their information. Employers can search for talent, view resumes, and contact potential candidates.
+<br><br>
 <img src="public\assets\ResumeManagerHomepage.png" alt="ERD Diagram" width="1000"/>
 
 ---
+
+***
 
 ## 🚀 Project Overview
 
@@ -13,26 +16,24 @@ The Resume Management System allows job seekers to upload their resumes and make
 
 ## ✨ Features
 
-### For Job Seekers:
+### 👤 For Job Seekers
+- 🔐 **Account Management**: Register, log in, reset password via email verification.
+- 📝 **Profile Creation**: Add personal details, bio, work experience, and education.
+- 📎 **Resume Upload**: Upload, preview, and display your resume on your profile.
+- 🖼️ **Profile Customization**: Update profile photo and cover image.
+- ❌ **Account Deletion**: Safe account deletion with confirmation prompt.
 
--   **Account Management**: Register for a new account, log in, and utilize a password reset option via email verification.
--   **Profile Creation**: Build a comprehensive personal profile including an "about" section, work experience, and education details.
--   **Resume Management**: Upload a resume, preview it, and see it displayed on your profile.
--   **Profile Customization**: Add and update your profile picture and cover image.
--   **Account Deletion**: A confirmation prompt ensures that you do not accidentally delete your account.
-
-### For Employers:
-
--   **Account Management**: Register and log in to the platform.
--   **Talent Search**: A dedicated "Talent Search" page to find candidates. You can filter and search for candidates by:
-    -   Username
-    -   Study Field
-    -   Language
-    -   Minimum Work Experience
--   **Candidate Profiles**: View detailed profiles of potential talents.
--   **Resume Access**: Preview and download candidates' resumes.
--   **FAQ**: A frequently asked questions page with a search functionality to quickly find answers.
--   **Profile Management**: Employers can edit their own profiles, including their "about" section, work experience, and education.
+### 🧑‍💼 For Employers
+- 🔐 **Account Management**: Register and log in securely.
+- 🔍 **Talent Search**: Filter candidates by:
+  - Username
+  - Study Field
+  - Language
+  - Minimum Work Experience
+- 🧾 **Candidate Profiles**: View complete candidate details.
+- 📥 **Resume Access**: Preview and download resumes.
+- ❓ **FAQ Page**: Searchable FAQs to address common questions.
+- 🧑‍💻 **Profile Management**: Edit employer profile, work history, and education.
 
 ### For Administrators:
 
@@ -50,12 +51,12 @@ The Resume Management System allows job seekers to upload their resumes and make
 
 ## 🛠️ Technologies & Tools
 
-The system is built using the following technologies:
-
--   **Frontend**: HTML, CSS, JavaScript, Bootstrap
--   **Backend**: PHP, Laravel
--   **Database**: MySQL
--   **Server**: Laragon
+| Layer     | Technologies                     |
+|-----------|----------------------------------|
+| Frontend  | HTML, CSS, JavaScript, Bootstrap |
+| Backend   | PHP (Laravel Framework)          |
+| Database  | MySQL                            |
+| Server    | Laragon                          |
 
 ---
 
@@ -130,3 +131,23 @@ The database schema includes the following tables:
 Here is the Entity-Relationship Diagram:
 
 <img src="public/assets/ERD_Diagram.jpg" alt="ERD Diagram" width="600"/>
+
+***
+
+## 👥 Contributors
+
+| Contributor | GitHub Profile |
+|-------------|----------------|
+| <img src="https://avatars.githubusercontent.com/zhengyu89" width="100"/> <br> **TAN ZHENG YU** | [@zhengyu89](https://github.com/zhengyu89) |
+| <img src="https://avatars.githubusercontent.com/ZhenLi0413" width="100"/> <br> **TAN ZHEN LI** | [@ZhenLi0413](https://github.com/ZhenLi0413) |
+| <img src="https://avatars.githubusercontent.com/Benjamin8763" width="100"/> <br> **BENJAMIN CHEW** | [@Benjamin8763](https://github.com/Benjamin8763) |
+| <img src="https://avatars.githubusercontent.com/zx823" width="100"/> <br> **TEOW ZI XIAN** | [@zx823](https://github.com/zx823) |
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for more details.
+
+---
