@@ -32,6 +32,7 @@ class AuthenticatedSessionController extends Controller
 
         $selectedRole = $request->input('role');
 
+        // Your custom logic to ensure the selected role matches the account's role is preserved.
         if ($user->role !== $selectedRole) {
             Auth::logout(); // Log out if role doesn't match
 
@@ -42,11 +43,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Your custom flash message is preserved.
         $request->session()->flash('just_logged_in', true);
         
-        $userId = Auth::id();
+        // --- MODIFIED SECTION ---
+        // Check the user's role and redirect them to the correct dashboard.
+        if ($user->role === 'admin') {
+            // If the user is an admin, redirect to the admin dashboard.
+            return redirect()->intended(route('admin.dashboard'));
+        }
 
-        return redirect()->intended(route('dashboard.show',['id' => $userId], absolute: false));
+        // For any other user role, use your original redirect to their personal dashboard.
+        return redirect()->intended(route('dashboard.show', ['id' => $user->id], absolute: false));
     }
 
     /**
